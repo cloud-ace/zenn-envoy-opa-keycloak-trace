@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  opa.yaml: |-
+    plugins:
+      envoy_ext_authz_grpc:
+        addr: ":9191"
+        enable-reflection: true
+    decision_logs:
+      console: true
+    distributed_tracing:
+      type: grpc
+      address: "otel-collector:4317"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: opa

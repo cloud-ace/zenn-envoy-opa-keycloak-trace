@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  policy.rego: "package envoy.authz\n\nimport input.attributes.request.http as http_request\n\ndefault
+    allow = false\n\nallow {\n\tauth\n}\n\nauth {\n  http_request.method == \"GET\"\n
+    \ claims.resource_access.web.roles[_] == \"extended\"\n}\n\nclaims = payload {\n
+    \   payload := json.unmarshal(base64url.decode(http_request.headers.payload))\n}"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: opa-policy
